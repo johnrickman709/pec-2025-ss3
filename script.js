@@ -8,68 +8,72 @@ function addToGallery() {
     return;
   }
 
-  const reader = new FileReader();
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "pecupload");
 
-  reader.onload = function (e) {
-    const mediaURL = e.target.result;
-    const container = document.getElementById("galleryContainer");
+  fetch("https://api.cloudinary.com/v1_1/pecclass2025/upload", {
+    method: "POST",
+    body: formData
+  })
+    .then(res => res.json())
+    .then(data => {
+      const url = data.secure_url;
+      const container = document.getElementById("galleryContainer");
 
-    const item = document.createElement("div");
-    item.className = "gallery-item";
+      const item = document.createElement("div");
+      item.className = "gallery-item";
 
-    // Media element
-    if (file.type.startsWith("video")) {
-      const video = document.createElement("video");
-      video.controls = true;
-      video.src = mediaURL;
-      item.appendChild(video);
-    } else if (file.type.startsWith("image")) {
-      const img = document.createElement("img");
-      img.src = mediaURL;
-      item.appendChild(img);
-    }
-
-    // Caption
-    const text = document.createElement("p");
-    text.textContent = caption || "No caption";
-    item.appendChild(text);
-
-    // Like and comment buttons
-    const actions = document.createElement("div");
-    actions.className = "actions";
-
-    const like = document.createElement("span");
-    like.className = "like-button";
-    like.textContent = "❤️ Like";
-    like.onclick = () => {
-      const current = parseInt(like.getAttribute("data-likes") || "0", 10) + 1;
-      like.setAttribute("data-likes", current);
-      like.textContent = `❤️ ${current} Like${current > 1 ? "s" : ""}`;
-    };
-
-    const comment = document.createElement("span");
-    comment.className = "comment-button";
-    comment.textContent = "💬 Comment";
-    comment.onclick = () => {
-      const commentText = prompt("Type your comment:");
-      if (commentText) {
-        const reply = document.createElement("p");
-        reply.textContent = `💬 ${commentText}`;
-        reply.style.marginLeft = "1rem";
-        item.appendChild(reply);
+      if (file.type.startsWith("video")) {
+        const video = document.createElement("video");
+        video.src = url;
+        video.controls = true;
+        item.appendChild(video);
+      } else {
+        const img = document.createElement("img");
+        img.src = url;
+        item.appendChild(img);
       }
-    };
 
-    actions.appendChild(like);
-    actions.appendChild(comment);
-    item.appendChild(actions);
+      const text = document.createElement("p");
+      text.textContent = caption || "No caption";
+      item.appendChild(text);
 
-    container.prepend(item);
-  };
+      const actions = document.createElement("div");
+      actions.className = "actions";
 
-  reader.readAsDataURL(file);
+      const like = document.createElement("span");
+      like.className = "like-button";
+      like.textContent = "❤️ Like";
+      like.onclick = () => {
+        const current = parseInt(like.getAttribute("data-likes") || "0") + 1;
+        like.setAttribute("data-likes", current);
+        like.textContent = `❤️ ${current} Like${current > 1 ? "s" : ""}`;
+      };
 
-  // Reset input
+      const comment = document.createElement("span");
+      comment.className = "comment-button";
+      comment.textContent = "💬 Comment";
+      comment.onclick = () => {
+        const commentText = prompt("Type your comment:");
+        if (commentText) {
+          const reply = document.createElement("p");
+          reply.textContent = `💬 ${commentText}`;
+          reply.style.marginLeft = "1rem";
+          item.appendChild(reply);
+        }
+      };
+
+      actions.appendChild(like);
+      actions.appendChild(comment);
+      item.appendChild(actions);
+      container.prepend(item);
+    })
+    .catch(err => {
+      alert("Upload failed. Please try again.");
+      console.error(err);
+    });
+
   fileInput.value = "";
   document.getElementById("captionInput").value = "";
-}
+    }
