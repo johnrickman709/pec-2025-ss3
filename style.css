@@ -1,0 +1,70 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5ff;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  background: linear-gradient(to right, #6a1b9a, #8e24aa);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+section {
+  margin: 2rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+input[type="file"], textarea {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #ffd54f;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.gallery-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #fafafa;
+}
+
+.gallery-item video, .gallery-item img {
+  max-width: 100%;
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  align-items: center;
+}
+
+.like-button, .comment-button {
+  cursor: pointer;
+  color: #6a1b9a;
+  font-weight: bold;
+  user-select: none;
+}

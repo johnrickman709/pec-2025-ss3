@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>P.E.C 2025 Digital Archive</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🎓 P.E.C 2025 – Media Archive</h1>
+    <p>Upload and relive the best moments with your classmates!</p>
+  </header>
+
+  <section class="upload">
+    <h2>📤 Upload a Memory</h2>
+    <input type="file" id="fileInput" accept="image/*,video/*">
+    <textarea id="captionInput" placeholder="Add a caption..."></textarea>
+    <button onclick="addToGallery()">Upload</button>
+  </section>
+
+  <section class="gallery">
+    <h2>🖼️ Shared Moments</h2>
+    <div id="galleryContainer"></div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
